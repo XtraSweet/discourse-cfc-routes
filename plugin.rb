@@ -3,22 +3,23 @@
 # name: discourse-cfc-routes
 # about: Registers server-side routes for CFC custom pages
 # meta_topic_id: 0
-# version: 0.1.0
+# version: 0.2.0
 # authors: CFC Team
 # url: https://github.com/XtraSweet/discourse-cfc-routes
 
 after_initialize do
+  load File.expand_path("../app/controllers/targets_controller.rb", __FILE__)
+  load File.expand_path("../app/controllers/meals_controller.rb", __FILE__)
+  load File.expand_path("../app/controllers/ingredients_controller.rb", __FILE__)
+
   Discourse::Application.routes.append do
-    # /targets - User targets/goals page
-    get "targets" => "static#show", defaults: { id: "targets" }
-    get "targets/*path" => "static#show", defaults: { id: "targets" }
+    get "targets" => "targets#index"
+    get "targets/*path" => "targets#index"
 
-    # /meals - Meal planning and tracking
-    get "meals" => "static#show", defaults: { id: "meals" }
-    get "meals/*path" => "static#show", defaults: { id: "meals" }
+    get "meals" => "meals#index"
+    get "meals/*path" => "meals#index"
 
-    # /ingredients - Ingredients database/browser
-    get "ingredients" => "static#show", defaults: { id: "ingredients" }
-    get "ingredients/*path" => "static#show", defaults: { id: "ingredients" }
+    get "ingredients" => "ingredients#index"
+    get "ingredients/*path" => "ingredients#index"
   end
 end
